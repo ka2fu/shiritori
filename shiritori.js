@@ -75,42 +75,70 @@ class Word {
   }
 }
 
-const readline = require("readline");
+// const readline = require("readline");
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
 
+// function shiritori(word) {
+//   rl.question(`your answer: `, (answer) => {
+//     if (answer === "q" || answer[answer.length - 1] === "ん") {
+//       if (answer[answer.length - 1] === "ん") {
+//         // んで終わる時はプロセスを終了
+//         console.log("end with ん");
+//       } else {
+//         // qが入力されたら終了
+//         console.log("exit");
+//       }
+//       rl.close();
+//     } else {
+//       let newWord = new Word(answer);
+//       let isvalid = newWord.validate(word);
+//       if (isvalid) {
+//         // りしとりが成立してる時
+//         console.log(`next word starts with ${newWord.nextchar}`);
+//         shiritori(newWord);
+//       } else {
+//         // りしとりが成立しない時
+//         console.log(`もう一回 (${word.word})`);
+//         shiritori(word);
+//       }
+//     }
+//   });
+// }
+
+// let userInput = prompt("Please enter something:");
+// alert("You entered: " + userInput);
+
+// しりとりの実行部分
 function shiritori(word) {
-  rl.question(`your answer: `, (answer) => {
-    if (answer === "q" || answer[answer.length - 1] === "ん") {
-      if (answer[answer.length - 1] === "ん") {
-        // んで終わる時はプロセスを終了
-        console.log("end with ん");
-      } else {
-        // qが入力されたら終了
-        console.log("exit");
-      }
-      rl.close();
+  let answer = prompt("「り」から始まる単語を入力してください。");
+  if (answer === "q") {
+    alert("終了");
+  } else if (answer[answer.length - 1] === "ん") {
+    alert("「ん」で終わる単語がが出たので終了。");
+  } else {
+    let newWord = new Word(answer);
+    let isvalid = newWord.validate(word);
+    if (isvalid) {
+      // しりとりが成立してる時
+      alert(`次は「${newWord.nextchar}」から始まる単語です。`);
+      shiritori(newWord);
     } else {
-      let newWord = new Word(answer);
-      let isvalid = newWord.validate(word);
-      if (isvalid) {
-        // りしとりが成立してる時
-        console.log(`next word starts with ${newWord.nextchar}`);
-        shiritori(newWord);
-      } else {
-        // りしとりが成立しない時
-        console.log(`もう一回 (${word.word})`);
-        shiritori(word);
-      }
+      // りしとりが成立しない時
+      alert(`もう一回 (前回の単語は「${word.word}」)`);
+      shiritori(word);
     }
-  });
+  }
 }
 
 // とりあえず「しりとり」から開始する
 let word = new Word("しりとり");
-console.log('quit when enter word end with "ん" or "q" to quit');
-console.log(`start from  ${word.word}`);
+// console.log('quit when enter word end with "ん" or "q" to quit');
+// console.log(`start from  ${word.word}`);
+alert(
+  `'q'で終了、もしくは「ん」で終わる単語が出たら終了。\n最初の単語は「${word.word}」から。`
+);
 shiritori(word);
